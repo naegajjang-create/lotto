@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style>
+<title>도전 LOTTO 당첨 확인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gothic+A1:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* layout: one narrow lottery-slip column; screen 1 = fake 꽝, scroll = reveal + random message card */
+:root{
+  --bg:#e9ebee; --paper:#f7f7f5; --ink:#17191c; --muted:#6a6f78;
+  --blue:#1f4fb3; --lime:#7fb51f; --pink:#f6cfdc; --red:#d23a3a; --line:#c9ccd2;
+  --display:"Black Han Sans","Gothic A1",system-ui,sans-serif;
+  --body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121417; --paper:#1d2024; --ink:#eef0f3; --muted:#9aa0aa;
+  --blue:#6f9bff; --lime:#a6d64a; --pink:#5a2e3d; --red:#ff6b6b; --line:#363a41; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121417; --paper:#1d2024; --ink:#eef0f3; --muted:#9aa0aa;
+  --blue:#6f9bff; --lime:#a6d64a; --pink:#5a2e3d; --red:#ff6b6b; --line:#363a41; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:440px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
+.slip{background:var(--paper);border:2px solid var(--ink);position:relative;padding:20px 40px 24px 20px}
+.slip::after{content:"";position:absolute;top:0;right:0;bottom:0;width:20px;background:var(--pink)}
+.logo{font-family:var(--display);line-height:1;display:flex;flex-direction:column}
+.logo .t1{color:var(--blue);font-size:22px}
+.logo .t2{font-size:44px;letter-spacing:.02em}
+.logo .t2 .b{color:var(--blue)} .logo .t2 .g{color:var(--lime)}
+.meta{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.round{font-weight:800;font-size:18px}
+.dash{border:0;border-top:1.5px dashed var(--muted);margin:16px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;letter-spacing:.04em}
+
+/* screen 1 */
+.fake{min-height:72vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px}
+.checking{font-size:13px;color:var(--muted);letter-spacing:.08em}
+.stamp{font-family:var(--display);font-size:clamp(110px,40vw,160px);line-height:1;color:var(--red);
+  border:6px solid var(--red);border-radius:50%;width:1.6em;height:1.6em;display:grid;place-items:center;transform:rotate(-12deg);margin-block:12px}
+.next{font-family:var(--display);font-size:clamp(22px,6.5vw,28px);text-wrap:balance}
+.sub{color:var(--muted);font-size:14px}
+.hint{margin-top:36px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px}
+.hint span{display:inline-block;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+@media (prefers-reduced-motion:no-preference){.stamp{animation:thud .5s cubic-bezier(.3,1.6,.5,1) both}}
+@keyframes thud{from{transform:rotate(-12deg) scale(1.6)}to{transform:rotate(-12deg) scale(1)}}
+
+/* reveal */
+.gap{height:38vh}
+.reveal{text-align:center;display:flex;flex-direction:column;gap:6px}
+.reveal h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,9vw,40px);line-height:1.2;margin:0;text-wrap:balance}
+.reveal p{margin:0;color:var(--muted)}
+.card{margin-top:28px;background:var(--paper);border:2px solid var(--ink);padding:22px 20px;display:flex;flex-direction:column;gap:14px;min-height:220px}
+.chip{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.08em;padding:3px 10px;border-radius:99px;color:var(--paper)}
+.chip.cheer{background:var(--blue)} .chip.tip{background:var(--lime);color:#17191c}
+.msg{font-size:20px;font-weight:600;line-height:1.55;margin:0;text-wrap:pretty;flex:1}
+.from{font-size:14px;color:var(--muted);text-align:right}
+.btn{margin-top:14px;width:100%;font:800 17px var(--body);padding:14px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.count{margin-top:6px;text-align:center;font-size:13px;color:var(--muted)}
+.dday{margin-top:28px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline}
+.dday .big{font-family:var(--display);font-size:34px;color:var(--blue);grid-row:span 2;align-self:center}
+.dday .lbl{font-weight:800}
+.dday .s{font-size:13px;color:var(--muted)}
+.bars{height:34px;margin-top:18px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 5px,var(--ink) 5px 6px,transparent 6px 9px,var(--ink) 9px 13px,transparent 13px 15px)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <section class="slip">
+    <div class="meta">
+      <div class="logo"><span class="t1">도전</span><span class="t2"><span class="b">LOT</span><span class="g">TO</span></span></div>
+      <div class="round">제 206회</div>
+    </div>
+    <hr class="dash">
+    <div class="fake">
+      <div class="checking">당첨 여부 조회 결과</div>
+      <div class="stamp" aria-label="꽝">꽝</div>
+      <div class="next">아직 당첨되지 않았습니다.</div>
+      <div class="sub">추첨일까지 기회는 남아 있습니다.</div>
+      <div class="hint">진짜 끝일까?<span aria-hidden="true">↓</span></div>
+    </div>
+    <hr class="dash">
+    <div class="mono">20261007 0206 486 1004 100 20261023</div>
+  </section>
+
+  <div class="gap" aria-hidden="true"></div>
+
+  <section class="reveal">
+    <h2>…라고 할 줄 알았지?</h2>
+    <p>찍어 본 너한테만 주는 한 장</p>
+  </section>
+
+  <article class="card" aria-live="polite">
+    <span id="chip" class="chip cheer">응원</span>
+    <p id="msg" class="msg">목표점수 정한 거, 그거 이미 반은 한 거야. 나머지 반은 시험 날 네가 채우면 돼.</p>
+    <div class="from">— 담임쌤</div>
+  </article>
+  <button id="again" class="btn" type="button">한 장 더 뽑기</button>
+  <div id="count" class="count">뽑을 때마다 다른 문구가 나와요</div>
+
+  <section class="dday" aria-label="시험 일정">
+    <div class="big" id="dd">D-6</div>
+    <div class="lbl">2학기 중간고사 10월 12일(월) 시작</div>
+    <div class="s">추첨 10월 23일(금) · 용지는 버리지 말 것</div>
+  </section>
+  <div class="bars" aria-hidden="true"></div>
+</div>
+
+<script>
+const LINES = [
+  ["cheer","목표점수 정한 거, 그거 이미 반은 한 거야. 나머지 반은 시험 날 네가 채우면 돼."],
+  ["cheer","어제보다 10분만 더. 그게 이번 성적 향상 조건이야."],
+  ["cheer","시험지는 너를 평가하지 않아. 2주 동안 네가 한 걸 확인할 뿐이야."],
+  ["cheer","지금 이걸 찍어 볼 정도의 호기심이면, 문제 하나 더 풀 힘도 있다."],
+  ["cheer","망한 과목이 있어도 다음 과목은 다르다. 쉬는 시간에 털고 가자."],
+  ["cheer","잘하고 있어. 진짜로. 쌤은 다 보고 있음."],
+  ["cheer","오늘 공부 안 한 게 걱정되면, 지금 딱 20분만 하고 자자."],
+  ["cheer","긴장되는 건 잘하고 싶다는 뜻이야. 이상한 거 아니야."],
+  ["tip","모르는 문제는 표시만 하고 넘어가기. 끝까지 다 보고 돌아오면 생각보다 풀려."],
+  ["tip","교과서 단원 제목만 보고 내용 30초 안에 설명하기. 막히는 곳이 오늘 복습할 곳."],
+  ["tip","틀린 문제는 답보다 '왜 그 선지를 골랐는지'를 적어 두기."],
+  ["tip","선생님이 수업 중에 두 번 말한 건 시험에 나올 확률이 높다."],
+  ["tip","서술형은 조건부터 동그라미. 조건 하나 빠지면 감점이야."],
+  ["tip","시험 직전 쉬는 시간엔 새 내용 말고, 이미 틀린 문제 한 번 더 훑기."],
+  ["tip","검토할 땐 문제를 처음 보는 척 다시 읽기. 실수는 '아는 문제'에서 나와."],
+  ["tip","폰은 공부할 때 다른 곳에. 의지보다 거리가 이긴다."],
+  ["tip","외울 건 자기 전에 한 번, 일어나서 한 번. 그 사이에 머리가 정리해 줘."]
+];
+const chip = document.getElementById("chip");
+const msg = document.getElementById("msg");
+let last = -1;
+function draw(){
+  let i;
+  do { i = Math.floor(Math.random()*LINES.length); } while (i === last && LINES.length > 1);
+  last = i;
+  const [kind, text] = LINES[i];
+  chip.className = "chip " + kind;
+  chip.textContent = kind === "tip" ? "시험 꿀팁" : "응원";
+  msg.textContent = text;
+}
+draw();
+document.getElementById("again").addEventListener("click", draw);
+
+// D-day in Korea time
+(function(){
+  const now = new Date(Date.now() + 9*3600*1000);
+  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const examDay = Date.UTC(2026, 9, 12);
+  const diff = Math.round((examDay - today) / 86400000);
+  const el = document.getElementById("dd");
+  el.textContent = diff > 0 ? "D-" + diff : diff === 0 ? "D-DAY" : "시험 기간";
+})();
+</script>
+
+</body>
+</html>
