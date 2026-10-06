@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style>
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <title>도전 LOTTO 당첨 확인</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,7 @@
   --bg:#121417; --paper:#1d2024; --ink:#eef0f3; --muted:#9aa0aa;
   --blue:#6f9bff; --lime:#a6d64a; --pink:#5a2e3d; --red:#ff6b6b; --line:#363a41; color-scheme:dark}
 
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+body{word-break:keep-all;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
 .wrap{max-width:440px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
 .slip{background:var(--paper);border:2px solid var(--ink);position:relative;padding:20px 40px 24px 20px}
 .slip::after{content:"";position:absolute;top:0;right:0;bottom:0;width:20px;background:var(--pink)}
@@ -37,6 +38,12 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 .dash{border:0;border-top:1.5px dashed var(--muted);margin:16px 0}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;letter-spacing:.04em}
 
+.hero{display:flex;flex-direction:column;gap:6px;padding-block:8px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--muted)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,9vw,40px);line-height:1.2;margin:0}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero p{margin:0;color:var(--muted);font-size:15px}
+.slip + .card{margin-top:16px}
 /* screen 1 */
 .fake{min-height:72vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px}
 .checking{font-size:13px;color:var(--muted);letter-spacing:.08em}
@@ -58,7 +65,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 .card{margin-top:28px;background:var(--paper);border:2px solid var(--ink);padding:22px 20px;display:flex;flex-direction:column;gap:14px;min-height:220px}
 .chip{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.08em;padding:3px 10px;border-radius:99px;color:var(--paper)}
 .chip.cheer{background:var(--blue)} .chip.tip{background:var(--lime);color:#17191c}
-.msg{font-size:20px;font-weight:600;line-height:1.55;margin:0;text-wrap:pretty;flex:1}
+.msg{font-size:18px;font-weight:600;line-height:1.55;margin:0;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word;flex:1}
 .from{font-size:14px;color:var(--muted);text-align:right}
 .btn{margin-top:14px;width:100%;font:800 17px var(--body);padding:14px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
 .btn:active{transform:translateY(1px)}
@@ -69,6 +76,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 .dday .lbl{font-weight:800}
 .dday .s{font-size:13px;color:var(--muted)}
 .bars{height:34px;margin-top:18px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 5px,var(--ink) 5px 6px,transparent 6px 9px,var(--ink) 9px 13px,transparent 13px 15px)}
+a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font:inherit!important;pointer-events:none}
 </style>
 </head>
 <body>
@@ -80,27 +88,21 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
       <div class="round">제 206회</div>
     </div>
     <hr class="dash">
-    <div class="fake">
-      <div class="checking">당첨 여부 조회 결과</div>
-      <div class="stamp" aria-label="꽝">꽝</div>
-      <div class="next">아직 당첨되지 않았습니다.</div>
-      <div class="sub">추첨일까지 기회는 남아 있습니다.</div>
-      <div class="hint">진짜 끝일까?<span aria-hidden="true">↓</span></div>
+    <div class="hero">
+      <div class="kicker">숨겨진 페이지 발견</div>
+      <h1>이걸 찍어 본 너는<br><em>호기심쟁이!</em></h1>
+      <p>응원 한 장 받아 가~!</p>
     </div>
     <hr class="dash">
     <div class="mono">20261007 0206 486 1004 100 20261023</div>
   </section>
 
-  <div class="gap" aria-hidden="true"></div>
-
-  <section class="reveal">
-    <h2>…라고 할 줄 알았지?</h2>
-    <p>찍어 본 너한테만 주는 한 장</p>
-  </section>
-
   <article class="card" aria-live="polite">
     <span id="chip" class="chip cheer">응원</span>
-    <p id="msg" class="msg">목표점수 정한 거, 그거 이미 반은 한 거야. 나머지 반은 시험 날 네가 채우면 돼.</p>
+    <p id="msg" class="msg">목표점수 정한 거,
+그거 이미 반은 한 거야.
+나머지 반은
+시험 날 네가 채우면 돼.</p>
     <div class="from">— 담임쌤</div>
   </article>
   <button id="again" class="btn" type="button">한 장 더 뽑기</button>
@@ -116,23 +118,23 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 
 <script>
 const LINES = [
-  ["cheer","목표점수 정한 거, 그거 이미 반은 한 거야. 나머지 반은 시험 날 네가 채우면 돼."],
-  ["cheer","어제보다 10분만 더. 그게 이번 성적 향상 조건이야."],
-  ["cheer","시험지는 너를 평가하지 않아. 2주 동안 네가 한 걸 확인할 뿐이야."],
-  ["cheer","지금 이걸 찍어 볼 정도의 호기심이면, 문제 하나 더 풀 힘도 있다."],
-  ["cheer","망한 과목이 있어도 다음 과목은 다르다. 쉬는 시간에 털고 가자."],
-  ["cheer","잘하고 있어. 진짜로. 쌤은 다 보고 있음."],
-  ["cheer","오늘 공부 안 한 게 걱정되면, 지금 딱 20분만 하고 자자."],
-  ["cheer","긴장되는 건 잘하고 싶다는 뜻이야. 이상한 거 아니야."],
-  ["tip","모르는 문제는 표시만 하고 넘어가기. 끝까지 다 보고 돌아오면 생각보다 풀려."],
-  ["tip","교과서 단원 제목만 보고 내용 30초 안에 설명하기. 막히는 곳이 오늘 복습할 곳."],
-  ["tip","틀린 문제는 답보다 '왜 그 선지를 골랐는지'를 적어 두기."],
-  ["tip","선생님이 수업 중에 두 번 말한 건 시험에 나올 확률이 높다."],
-  ["tip","서술형은 조건부터 동그라미. 조건 하나 빠지면 감점이야."],
-  ["tip","시험 직전 쉬는 시간엔 새 내용 말고, 이미 틀린 문제 한 번 더 훑기."],
-  ["tip","검토할 땐 문제를 처음 보는 척 다시 읽기. 실수는 '아는 문제'에서 나와."],
-  ["tip","폰은 공부할 때 다른 곳에. 의지보다 거리가 이긴다."],
-  ["tip","외울 건 자기 전에 한 번, 일어나서 한 번. 그 사이에 머리가 정리해 줘."]
+  ["cheer","목표점수 정한 거,\n그거 이미 반은 한 거야.\n나머지 반은\n시험 날 네가 채우면 돼."],
+  ["cheer","어제보다 10분만 더.\n그게 이번 성적 향상 조건이야."],
+  ["cheer","시험지는 너를 평가하지 않아.\n2주 동안 네가 한 걸\n확인할 뿐이야."],
+  ["cheer","지금 이걸 찍어 볼\n정도의 호기심이면,\n문제 하나 더 풀 힘도 있다."],
+  ["cheer","망한 과목이 있어도\n다음 과목은 다르다.\n쉬는 시간에 털고 가자."],
+  ["cheer","잘하고 있어. 진짜로.\n쌤은 다 보고 있음."],
+  ["cheer","오늘 공부 안 한 게\n걱정되면,\n지금 딱 20분만 하고 자자."],
+  ["cheer","긴장되는 건\n잘하고 싶다는 뜻이야.\n이상한 거 아니야."],
+  ["tip","모르는 문제는\n표시만 하고 넘어가기.\n끝까지 다 보고 돌아오면\n생각보다 풀려."],
+  ["tip","교과서 단원 제목만 보고\n내용 30초 안에 설명하기.\n막히는 곳이\n오늘 복습할 곳."],
+  ["tip","틀린 문제는 답보다\n'왜 그 선지를 골랐는지'를\n적어 두기."],
+  ["tip","선생님이 수업 중에\n두 번 말한 건\n시험에 나올 확률이 높다."],
+  ["tip","서술형은\n조건부터 동그라미.\n조건 하나 빠지면 감점이야."],
+  ["tip","시험 직전 쉬는 시간엔\n새 내용 말고,\n이미 틀린 문제\n한 번 더 훑기."],
+  ["tip","검토할 땐 문제를\n처음 보는 척 다시 읽기.\n실수는 '아는 문제'에서 나와."],
+  ["tip","폰은 공부할 때 다른 곳에.\n의지보다 거리가 이긴다."],
+  ["tip","외울 건 자기 전에 한 번,\n일어나서 한 번.\n그 사이에 머리가 정리해 줘."]
 ];
 const chip = document.getElementById("chip");
 const msg = document.getElementById("msg");
